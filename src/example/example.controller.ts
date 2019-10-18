@@ -4,6 +4,8 @@ import {
   Router,
 } from 'express'
 
+import { getAsync } from '../../utils/storage'
+
 export default class ExampleController {
   public path = '/example'
   public router = Router()
@@ -17,6 +19,6 @@ export default class ExampleController {
   }
 
   public getAll = async (request: Request, response: Response) => {
-    response.json([])
+    response.json(await getAsync('orders'))
   }
 }
