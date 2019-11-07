@@ -6,9 +6,13 @@ import {
 
 import { getAsync, setAsync, delAsync } from '../../utils/storage'
 
-export default class ExampleController {
-  public path = '/orders'
-  public pathId = '/orders/:id'
+import {
+  IOrder
+} from './Order'
+
+export default class OrderController {
+  public path: string = '/orders'
+  public pathId: string = '/orders/:id'
   public router = Router()
 
   constructor() {
@@ -29,13 +33,13 @@ export default class ExampleController {
   }
 
   public getOne = async (request: Request, response: Response) => {
-    const id = request.params.id
+    const id: number = Number(request.params.id)
 
     const rawOrders: string = await getAsync('orders')
-    const orders: any[] = JSON.parse(rawOrders) || []
+    const orders: IOrder[] = JSON.parse(rawOrders) || []
 
     // tslint:disable-next-line: triple-equals
-    const foundOrder: any = orders.find((order) => order.id == id)
+    const foundOrder: IOrder = orders.find((order) => order.id === id)
 
     if (!foundOrder) {
       return response.sendStatus(404)
@@ -45,37 +49,37 @@ export default class ExampleController {
   }
 
   public delete = async (request: Request, response: Response) => {
-    const id = request.params.id
+    const id: number = Number(request.params.id)
 
     const rawOrders: string = await getAsync('orders')
-    const orders: any[] = JSON.parse(rawOrders) || []
+    const orders: IOrder[] = JSON.parse(rawOrders) || []
     // tslint:disable-next-line: triple-equals
-    const orderToDelete: any = orders.find((order) => order.id == id)
+    const orderToDelete: IOrder = orders.find((order) => order.id === id)
 
     if (!orderToDelete) {
       return response.sendStatus(404)
     }
 
-    const newOrders: any[] = orders.filter((order) => order.id !== orderToDelete.id)
+    const newOrders: IOrder[] = orders.filter((order: IOrder) => order.id !== orderToDelete.id)
     await setAsync('orders', JSON.stringify(newOrders))
 
     response.sendStatus(204)
   }
 
   public update = async(request: Request, response: Response) =>{
-    const updateInformations: any = request.body
-    const id = request.params.id
+    const updateInformations: IOrder = request.body
+    const id: number = Number(request.params.id)
 
     const rawOrders: string = await getAsync('orders')
-    const orders: any[] = JSON.parse(rawOrders) || []
+    const orders: IOrder[] = JSON.parse(rawOrders) || []
     // tslint:disable-next-line: triple-equals
-    const orderToUpdate: any = orders.find((order) => order.id == id)
+    const orderToUpdate: IOrder = orders.find((order: IOrder) => order.id === id)
 
     if (!orderToUpdate) {
       return response.sendStatus(404)
     }
 
-    const newOrders: any[] = orders.map((order) => {
+    const newOrders: IOrder[] = orders.map((order) => {
       if (order.id === orderToUpdate.id) {
         return {
           ...order,
@@ -89,27 +93,27 @@ export default class ExampleController {
   } 
 
   public create = async (request: Request, response: Response) => {
-      let orderToSave = request.body
+      let orderToSave: IOrder = request.body
       const rawOrders: string = await getAsync('orders')
-      const orders: any[] = JSON.parse(rawOrders) || []
+      const orders: IOrder[] | [] = JSON.parse(rawOrders) || []
 
-      const sortedOrders = orders.sort((previous: any, current: any) => {
+      const sortedOrders: IOrder[] | [] = orders.sort((previous: IOrder, current: IOrder) => {
           return current.id - previous.id
       })
 
-      const lastId = 0
+      const lastId: number = 0
       if (sortedOrders.length !=0 && sortedOrders[0].id > 0){
         sortedOrders[0].id
       }
 
-      orderToSave = {
+      let orderToSaveBis: IOrder = {
           ...orderToSave,
           id: lastId + 1,
           createdAt: new Date(),  
       }
 
-      orders.push(orderToSave)
-      await setAsync('orders', JSON.stringify(orders))
+      let newOrders: IOrder[] = [...orders, orderToSaveBis]
+      await setAsync('orders', JSON.stringify(newOrders))
 
       response.status(201).json(orderToSave)
 
