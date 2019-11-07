@@ -1,5 +1,5 @@
 import App from './app'
-import ExampleController from './src/example/example.controller'
+import ExampleController from './src/example/orders.controller'
 
 const app = new App([
   new ExampleController(),
