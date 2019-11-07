@@ -21,4 +21,4 @@ Il est donc possible d'effectuer :
 ### Question 2
 
 On crée un fichier Order.ts, contenant toutes les classes et interfaces caractérisant les objets insérés dans Redis.
-
+Cette partie applique le principe du I de SOLID : la Ségrégation des Interfaces (c'est à dire préferer plusieurs interfaces spécifiques pour chaque client plutôt qu'une seule interface générale)
