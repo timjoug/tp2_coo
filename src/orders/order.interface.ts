@@ -1,3 +1,7 @@
+// import {
+//   OrderBuilder
+// } from './order.builder'
+
 interface IOrder {
     id: number;
     createdAt: Date;
@@ -12,6 +16,14 @@ class Order implements IOrder{
     packages: Package[];
     contact: Contact;
     carrier: Carrier;
+
+    // constructor(orderBuilder: OrderBuilder) {
+    //   this.id = orderBuilder.getId();
+    //   this.createdAt = orderBuilder.getCreatedAt();
+    //   this.packages = orderBuilder.getPackages();
+    //   this.contact = orderBuilder.getContact();
+    //   this.carrier = orderBuilder.getCarrier();
+    // }
   }
 
   class Package {
@@ -62,4 +74,4 @@ class Order implements IOrder{
     headOfficeAddress: Address;
   }
 
-export {IOrder, Order}
+export {IOrder, Order, Package, Contact, Carrier}

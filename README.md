@@ -29,3 +29,8 @@ L'objectif de cette question est d'appliquer la principe de responsabilité uniq
 La solution s'articule donc autour des fichiers suivants :      
 - Le fichier order.service.ts encapsule la logique permettant la manipulation du contenu de la base Redis : le coeur de la requête
 - Le fichier order.controller.ts contient maintenant l'appel de la requête, dans une promesse, dans le but de gérer l'etat de la requête
+
+### Question 4
+
+L'objectif est notamment d'utiliser un Design Pattern Builder, afin de masquer une partie des schéma dans les requetes Get.     
+(Dans la mesure où la fonction ne fonctionne pas correctement, le builder ne sera pas implenté dans la classe Order pour le moment)

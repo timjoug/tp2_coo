@@ -6,6 +6,10 @@ import {
     Storage
 } from './order.storage'
 
+import { 
+    OrderBuilder 
+} from './order.builder'
+
 class OrderService{
 
     private orderRepository: Storage;
@@ -19,6 +23,18 @@ class OrderService{
             const orders: IOrder[] = await this.orderRepository.get();
 
             if(orders !== undefined) {
+                // let fakeData: IOrder[] = []
+                // orders.forEach((order) => {
+                //     fakeData.push(
+                //         new OrderBuilder()
+                //         .setId(order.id)
+                //         .setCreatedAt(order.createdAt)
+                //         .setPackages(order.packages)
+                //         .setCarrier(order.carrier)
+                //         .build()
+                //     );
+                //   });
+                // resolve(fakeData);
                 resolve(orders);
             } else {
                 reject();
